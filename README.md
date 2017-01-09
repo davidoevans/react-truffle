@@ -1,6 +1,57 @@
 # react-truffle
 A React app created, ejected and modified to to include Truffle integration.
 
+Following along with this Truffle tutorial [Bunling with Webpack](http://truffleframework.com/tutorials/bundling-with-webpack), we'll
+install some dependencies.  Since the ejected React app already has webpack and
+webpack-dev-server installed, we just install the truffle-solidity-loader to
+enable Solidity support.
+
+```
+$ npm install truffle-solidity-loader --save-dev
+```
+
+Configure Webpack
+Edit `config\webpack.config.dev.js` to load `.sol` files from your project.
+
+```
+module: {
+  // First, run the linter.
+  // It's important to do this before Babel processes the JS.
+  preLoaders: [
+    {
+      test: /\.(js|jsx)$/,
+      loader: 'eslint',
+      include: paths.appSrc,
+    }
+  ],
+  loaders: [
+  ...
+  },
+  {
+    test: /\.sol/, loader: 'truffle-solidity'
+  }
+]
+},
+...
+```
+
+Create a truffle.js
+Your truffle.js will not have any build configuration since webpack will handle
+building your web application.  (What happens if you run truffle build?)
+
+The only configuration in truffle.js is non-web configuration such as rpc.
+
+```javascript
+module.exports = {
+  rpc: {
+    host: "localhost",
+    port: 8545
+  }
+}
+```
+
+Copy example contracts from truffle-basic project
+
 ----------------------
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
@@ -915,7 +966,7 @@ This feature is experimental and still [has major usage issues](https://github.c
 
 ### Editor Integration
 
-If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates. 
+If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
