@@ -1,5 +1,5 @@
 # react-truffle
-A React app created, ejected and modified to be a Truffle Dapp.
+A React app created, ejected and modified to to include Truffle integration.
 
 ----------------------
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
