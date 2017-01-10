@@ -1,6 +1,10 @@
 # react-truffle
 A React app created, ejected and modified to to include Truffle integration.
 
+So now we've seen how easy it is to create a react application and we've seen how easy it is to create a Dapp with Truffle.
+
+So how do we combine these into a cohesive development environment?
+
 ```Linux
 create-react-app react-truffle
 cd react-truffle
@@ -114,6 +118,40 @@ truffle migrate
 # this works however, accessing http://localhost:8080 shows error "Cannot /GET"
 truffle serve
 ```
+
+Next, let's try and reproduce the tests for our default contracts created by
+Truffle.  The Truffle project used Mocha to create these test but our React
+application is already configure to use Jest which is Facebook's test framework.
+
+~~In the spirit of leveraging the components created for us from create-react-app,
+let's try and reproduce the Truffle tests from Mocha to Jest.~~
+
+It turns out that Truffle has built a custom `contract()` function on top of Mocha
+to add a couple of helpful features.
+
+* Before each `contract()` function runs, contracts are redeployed to the running
+Ethereum client.
+* The `contract()` function provides a list of accounts as a second parameter you
+can use to write tests against.
+
+So we'll simply copy the test folder from our `truffle-basic` project.
+
+```Mocha
+David-Evanss-MacBook-Pro:react-truffle davidevans$ truffle test
+
+
+  Contract: MetaCoin
+    ✓ should put 10000 MetaCoin in the first account
+    ✓ should call a function that depends on a linked library (64ms)
+    ✓ should send coin correctly (132ms)
+
+
+  3 passing (3s)
+```
+
+It worked!  No additional configuration required.  Notice that we don't have
+Mocha configured in our project.  These tests are being run by Truffle which
+has Mocha configured along with their custom `contract()` function.
 
 Next, we'll connect our basic React web application to our Truffle contracts..
 
