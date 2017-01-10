@@ -1,17 +1,25 @@
 # react-truffle
 A React app created, ejected and modified to to include Truffle integration.
 
+```Linux
+create-react-app react-truffle
+cd react-truffle
+npm run eject # to 'unhide' the transitive dependencies
+```
+
+Now let's start configuring our react application with truffle integration.
+
 Following along with this Truffle tutorial [Bunling with Webpack](http://truffleframework.com/tutorials/bundling-with-webpack), we'll
 install some dependencies.  Since the ejected React app already has webpack and
 webpack-dev-server installed, we just install the truffle-solidity-loader to
 enable Solidity support.
 
-```
-$ npm install truffle-solidity-loader --save-dev
+```Linux
+npm install truffle-solidity-loader --save-dev
 ```
 
 Configure Webpack
-Edit `config\webpack.config.dev.js` to load `.sol` files from your project.
+Edit `config\webpack.config.dev.js` and `config\webpack.prod.js` to load `.sol` files from your project.
 
 ```
 module: {
@@ -51,6 +59,63 @@ module.exports = {
 ```
 
 Copy example contracts from truffle-basic project
+Copy migrations folder from truffle-basic project
+
+We need to test that all our truffle functionality still works.
+
+Receiving this error trying to run any truffle commands:
+
+```
+David-Evanss-MacBook-Pro:react-truffle davidevans$ truffle compile
+
+Error: Using `babel-preset-react-app` requires that you specify `NODE_ENV` or `BABEL_ENV` environment variables. Valid values are "development", "test", and "production". Instead, received: undefined. (While processing preset: "/Users/davidevans/react-dapp-course/react-truffle/node_modules/babel-preset-react-app/index.js")
+
+    at Object.<anonymous> (/Users/davidevans/react-dapp-course/react-truffle/node_modules/babel-preset-react-app/index.js:44:9)
+
+    at Module._compile (module.js:409:26)
+
+    at Module._extensions..js (module.js:416:10)
+
+    at Object.require.extensions.(anonymous function) [as .js] (/usr/local/lib/node_modules/truffle/node_modules/babel-register/lib/node.js:152:7)
+    ...
+```
+
+Fix #1 - Ugly
+Fixed above error by editing node_modules/babel-preset-react-app/index.js to include:
+
+```JavaScript
+process.env.NODE_ENV = 'development';
+```
+
+Fix #2 - Use babel-preset-es2015
+See Usage Outside of Create React App at [babel-preset-react-app](https://www.npmjs.com/package/babel-preset-react-app).
+
+```Linux
+# need to clarify if these were necessary
+npm install --save-dev babel-preset-es2015
+# also install babel-preset-stage-2 but now clear that is needed.
+```
+
+Create .babelrc file at root of the project with the following setting.
+
+```JSON
+{
+  "presets": ["es2015"]
+}
+```
+
+Now we can run truffle commands and they work as expected.
+
+```Linux
+# Compile our contracts to the build/contracts folder
+truffle compile
+truffle migrate
+
+# this works however, accessing http://localhost:8080 shows error "Cannot /GET"
+truffle serve
+```
+
+Next, we'll connect our basic React web application to our Truffle contracts..
 
 ----------------------
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
