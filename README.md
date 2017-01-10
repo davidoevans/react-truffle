@@ -153,7 +153,15 @@ It worked!  No additional configuration required.  Notice that we don't have
 Mocha configured in our project.  These tests are being run by Truffle which
 has Mocha configured along with their custom `contract()` function.
 
-Next, we'll connect our basic React web application to our Truffle contracts..
+This is good but the base of our project is getting busy which makes it
+challenging to keep track of what belongs to Truffle vs React.  Next, i'll
+create a truffle folder at the root of the project and move truffle.js file
+along with the contracts, migrations and test folders there.
+
+I'll test that each of truffle compile, truffle migrate and truffle test
+commands still work.
+
+Next, we'll hook up our basic React web application to our Truffle contracts.
 
 ## Table of Contents
 
