@@ -158,6 +158,10 @@ challenging to keep track of what belongs to Truffle vs React.  Next, i'll
 create a truffle folder at the root of the project and move truffle.js file
 along with the contracts, migrations and test folders there.
 
+(Later, when I tried to run the React web application, there was an error caused
+  by the .bablrc file in the root project folder.  Moving this to the truffle
+  subfolder keeps each of the Truffle and React components working)
+
 I'll test that each of truffle compile, truffle migrate and truffle test
 commands still work.
 
