@@ -1,3 +1,5 @@
+Don't use this.  It is not in a working state.
+
 # react-truffle
 A React app created, ejected and modified to to include Truffle integration.
 
